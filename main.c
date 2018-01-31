@@ -9,7 +9,7 @@ int main() {
 	pid_t pid;
 	
 	if (pid = fork()) {
-		FILE* f = fopen("./pid_proc.txt", "w");
+		FILE* f = fopen("/home/box/pid", "w");
 		fprintf(f, "%d", pid);
 		fclose(f);
 
