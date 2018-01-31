@@ -2,33 +2,40 @@
 #include <signal.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 
+void pid2file(pid_t pid, const char* path2file) {
+	FILE* f = fopen(path2file, "w");
+	fprintf(f, "%d", pid);
+	fclose(f);
+}
 
 int main() {
 
-	pid_t pid;
+	pid_t pid; 
 	
 	if (pid = fork()) {
-		FILE* f = fopen("/home/box/pid", "w");
-		fprintf(f, "%d", pid);
-		fclose(f);
+		
+		//printf("Child pid is %d", pid);
 
-		struct sigaction new_action;
-	    new_action.sa_handler = SIG_IGN;
-	    new_action.sa_flags = SA_RESTART;
+		pid2file(getpid(), "/home/box/pid_parent");
+		pid2file(pid, "/home/box/pid_child");
 
-	    sigemptyset(&new_action.sa_mask);
+		int status, w;
 
-		sigaddset(&new_action.sa_mask, SIGINT);
-		sigaddset(&new_action.sa_mask, SIGTERM);
+		do {
+			waitpid(pid, &status, 0);
+			if (w == -1) perror("Error in waitpid!\n");
 
-		sigaction(SIGINT, &new_action, NULL);
-		sigaction(SIGTERM, &new_action, NULL);
+		} while(!WIFSIGNALED(status));
+
+		//printf("Child with pid %d is KILLED!\n", pid);	
 
 		return 0;
 	}
 
-	// printf("Hello from C-code :)\n");
+	//while(1) printf("Child is here with pid %d\n", getpid());	
+	while(1);
 
 	return 0;
 }
