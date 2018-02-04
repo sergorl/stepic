@@ -14,7 +14,7 @@ union semun {
 int main()
 {
     key_t key = ftok("/tmp/sem.temp", 1);
-    int sem = semget(key, 16, 0777 | IPC_PRIVATE);
+    int sem = semget(key, 16, 0666 | IPC_CREATE);
     
     for(size_t i = 0; i<16; ++i) {
     	union semun arg;
