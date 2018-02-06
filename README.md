@@ -1,2 +1,2 @@
-# stepic_education
+# stepic
 Solutions
