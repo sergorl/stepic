@@ -1,2 +1,0 @@
-make --ignore-errors
-./main
