@@ -24,7 +24,7 @@ int main() {
 	static const int childsocket = 1;
 	pid_t pid;
 
-	socketpair(PF_LOCAL, SOCK_STREAM, 0, fd);
+	socketpair(AF_UNIX, SOCK_STREAM, 0, fd);
 
 	pid = fork();
 	
